@@ -15,12 +15,23 @@ else
 </head>
 <body>
 <form method = "POST">
+<?php if(isset($_SESSION['UserId']))
+	{ ?>
 	<h2 text-align="center">Limited Time Only.com</h2> <input type="submit" name="Logbtn" value="Logout">
+<?php }
+	  else
+	  {
+		  ?> <input type="submit" name="Loginbtn" value="Login"> <?php
+	  }?>
 	<h3 text-align="right"><?php echo "Hello, " . $user["username"] . ".";?></h3>
 	<?php
 		if(isset($_POST['Logbtn']))
 	{
 		session_destroy();
+		header('location: mainPage.php');
+	}
+	if(isset($_POST['Loginbtn']))
+	{
 		header('location: login.php');
 	}
 	?>
@@ -86,14 +97,15 @@ else
 			?>
 			<form method="POST">
 			<?php
-				//echo '<tr><td align="center"><a href="DbTest.php" name="item'.'"><img src="data:image/jpeg;base64,'.base64_encode($row['item_image']).'" height="150" width="100" /></a></td></tr>';
-				echo "<tr><td><input type='image' src='data:image/jpeg;base64,'". base64_encode($row['item_image']) ."' border='0' alt='Submit' /></td></tr>";
+			$_SESSION['Itemid'] = "1";
+				echo '<tr><td align="center"><a href="itemDetails.php" name="item'.'"><img src="data:image/jpeg;base64,'.base64_encode($row['item_image']).'" height="150" width="100" /></a></td></tr>';
+				//echo "<tr><td><input type='image' src='data:image/jpeg;base64,'". base64_encode($row['item_image']) ."' border='0' alt='Submit' /></td></tr>";
 				echo "<tr><td align='center'>" . $row["item_name"] . " | Price: " . $row["item_price"] . "$ | Quantity left: " . $row["item_qoh"] . "</td><tr>";
 				echo "<tr><td align='center'>" . $row["item_desc"] . "</td><tr>";
-				if($_POST['item'.$i.''])
-				{
-					$_SESSION['Itemid'] = $row['item_id'];
-				}
+				//if($_POST['item'.$i.''])
+			//	{
+			//		$_SESSION['Itemid'] = $row['item_id'];
+				//}
 				?></form><?php
 				
 				$i++;
