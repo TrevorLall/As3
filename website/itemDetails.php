@@ -28,6 +28,12 @@
 			{
 				echo "Sale has ended!";
 			}
+			?>
+				<div style="float:right;">
+					<p>Select an Amount: <input type="number" name="numbox" value="1"></p><br />
+					<input type="submit" name="subbtn" value="Buy Now!">
+				</div>
+			<?php
 		}
 		else
 		{

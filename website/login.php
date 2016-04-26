@@ -1,8 +1,26 @@
 <html>
 <head>
+<link rel="stylesheet" type="text/css" href="../website/stylesheets/styleMain.css" />
 <title> Login page </title>
 </head>
 <body>
+<div class="header">
+			<div class="headerContent">
+				<a href="#">
+					<img src="../website/itemImages/BannerLogoasd.png" alt="PhishyLabs Logo" title="PhishyLabs Logo" />
+				</a>
+				<div class="nav">
+					<ul>
+						<li><a href="#">Home</a></li>
+						<li><a href="usersAdmin.php">Users</a></li>
+						<li><a href="orderAdmin.php">Orders</a></li>
+						<li><a href="#">Log Out</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="headerBreak"></div>
+		</div>
+		<div class="mainBody">
 <form method="POST">
 	<input type="text" name="userval">
 	<input type="password" name="passval">
@@ -62,5 +80,6 @@ require 'DbTest.php';
 		<input type="button" value="Register" />
 	</a>
 </form>
+</div>
 </body>
 </html>
