@@ -7,7 +7,7 @@
 <head>
 <body>
 <?php
-	require 'dbTest.php';
+	require 'inludes/dbTest.php';
 	if($_SESSION['roleId'] != 1 || $_SESSION['roleId'] == null ){
 		header('location: login.php ');
 	}

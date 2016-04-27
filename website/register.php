@@ -30,7 +30,7 @@ function newuser($conn)
     echo "New record created successfully";
 
 } else {
-    echo "Error: " . $add . "<br>" . $conn->error;
+   // echo "Error: " . $add . "<br>" . $conn->error;
 }
 }
 function SignUp($conn)
@@ -43,6 +43,14 @@ if(!empty($_POST['UserN']) && (!empty($_POST["Pass"])))
 	if(!$Sdata)
 	{
 		newuser($conn);
+		if((isset($_SESSION['Itemid'])) && (isset($_SESSION['AmountSelected'])))
+		{
+			$selID = $conn->query("SELECT user_id FROM login_users WHERE username = '$_POST[UserN]'");
+			$IDdata = $selID->fetch_array(MYSQLI_BOTH);
+			$_SESSION['UserId'] = $row['user_id'];
+			header('location: payment.php');
+		}
+		header('location: login.php');
 	}
 	else
 	{

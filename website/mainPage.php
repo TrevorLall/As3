@@ -115,7 +115,7 @@ else
 			?>
 			<form method="POST">
 			<?php
-			$_SESSION['Itemid'] = "1";
+			$_SESSION['Itemid'] = "2";
 				echo '<tr><td align="center"><a href="itemDetails.php" name="item'.'"><img src="data:image/jpeg;base64,'.base64_encode($row['item_image']).'" height="150" width="100" /></a></td></tr>';
 				//echo "<tr><td><input type='image' src='data:image/jpeg;base64,'". base64_encode($row['item_image']) ."' border='0' alt='Submit' /></td></tr>";
 				echo "<tr><td align='center'>" . $row["item_name"] . " | Price: " . $row["item_price"] . "$ | Quantity left: " . $row["item_qoh"] . "</td><tr>";

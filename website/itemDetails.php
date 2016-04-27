@@ -30,14 +30,29 @@
 			}
 			?>
 				<div style="float:right;">
-					<p>Select an Amount: <input type="number" name="numbox" value="1"></p><br />
+					<p>Select an Amount: <input type="number" name="numbox" value="1" min="1"></p><br />
 					<input type="submit" name="subbtn" value="Buy Now!">
+					<?php
+					if(isset($_POST["subbtn"]))
+					{
+
+						$_SESSION['AmountSelected'] = $_POST["numbox"]; 
+						if(isset($_SESSION['UserId']))
+						{
+							header('location: payment.php');
+						}
+						else
+						{
+							header('location: login.php');
+						}
+					}
+					?>
 				</div>
 			<?php
 		}
 		else
 		{
-			header("location: mainPage.php");
+			header('location: mainPage.php');
 		}
 	?>
 </form>

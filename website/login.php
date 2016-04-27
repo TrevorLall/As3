@@ -58,6 +58,11 @@ require 'DbTest.php';
 						$_SESSION['roleId'] = $row['role_id'];
 						header('location: itemsAdmin.php');
 					}
+					else if ((isset($_SESSION['Itemid'])) && (isset($_SESSION['AmountSelected'])))
+					{
+						$_SESSION['UserId'] = $row['user_id'];
+						header('location: payment.php');
+					}
 					else
 					{
 						$_SESSION['UserId'] = $row['user_id'];
