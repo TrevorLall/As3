@@ -6,7 +6,7 @@
 <body>
 <form method="POST">
 	<?php 
-	require 'inludes/DbTest.php';
+	require 'DbTest.php';
 		if(isset($_SESSION['Itemid']))
 		{
 			$data = $conn->query("SELECT * FROM inv_items WHERE item_id = '$_SESSION[Itemid]'");
@@ -28,6 +28,19 @@
 			{
 				echo "Sale has ended!";
 			}
+			?>
+				<div style="float:right;">
+					<p>Select an Amount: <input type="number" name="numbox" value="1" min="1"></p><br />
+					<input type="submit" name="subbtn" value="Buy Now!">
+					<?php
+					if(isset($_POST["subbtn"]))
+					{
+						$_SESSION['AmountSelected'] = $_POST["numbox"]; 
+						header("location: DbTest.php");
+					}
+					?>
+				</div>
+			<?php
 		}
 		else
 		{
