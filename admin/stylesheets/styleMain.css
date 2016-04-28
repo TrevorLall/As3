@@ -35,15 +35,16 @@ body{
 .adding{
 	height: auto;
 	width: 30%;
-	float: left;
-	display:block;
-	padding-top:20px;
+	padding-top:30px;
 	padding: 5px;
 	border-style: solid;
     border-width: 2px;
 	border-color: #006FFF;
-	background-color: #cce6ff;
+	background-color: #c2f0c2;
 	text-align: center;
+	margin: 0 auto;
+	vertical-align:middle;
+	
 	
 }
 .adding input{

@@ -11,10 +11,10 @@
 
 <?php
 	require 'inludes/dbTest.php';
-	if($_SESSION['roleId'] != 1 || $_SESSION['roleId'] == null ){
+	/*if($_SESSION['roleId'] != 1  ){
 		header('location: login.php ');
 	}
-	else{
+	else{*/
 	if(isset($_POST['addAdmin'])){
 		$user = $_POST['adminUser'];
 		$pass = $_POST['adminPass'];
@@ -31,17 +31,13 @@
 	}
 	if(isset($_POST['deleteBtn'])){
 		$delIndex=$_POST['actionIndex'];
-		if($delIndex == 13){
-			echo "<script>myFunction()</script>";
+		if($delete= $conn->query("DELETE FROM `login_users` WHERE user_id = {$delIndex}")){
+			echo "<font color='green'>Deleted user!";
 		}
 		else{
-			if($delete= $conn->query("DELETE FROM `login_users` WHERE user_id = {$delIndex}")){
-				echo "Deleted user!";
-			}
-			else{
-				echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-			}
+			echo "<font color='red'>Silly Admin! You cant delete someone with previous purchasing history!";
 		}
+		
 	}	
 	if(isset($_POST['updateBtn'])){
 		$upuser = $_POST['theUser'];
@@ -79,7 +75,7 @@
 		<input OnClick="location.href='orderAdmin.php'" type="button" value="Orders">
 		<h2>User Information</h2>
 		<?php
-		if($result=$conn->query("SELECT * FROM `login_users` INNER JOIN login_roles USING (role_id) ORDER BY user_id")){
+		if($result=$conn->query("SELECT * FROM `login_users` INNER JOIN login_roles USING (role_id) WHERE role_id = 2 ORDER BY user_id")){
 			if ($result->num_rows > 0) {?>
 			<div class="CSSTableGenerator" ><table border="1" style="solid"><?php
 			// output data of each row
@@ -116,7 +112,7 @@
 		</div>
 	</div>
 	<?php
-	}
+	//}
 	?>
 	
 	

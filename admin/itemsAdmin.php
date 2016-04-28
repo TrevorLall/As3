@@ -9,7 +9,6 @@
 		header('location: login.php ');
 	}
 	else{*/
-	echo $_SESSION['roleId'];
 	if(isset($_POST['addItem'])){
 		$name = $_POST['ItemName'];
 		$price = $_POST['ItemPrice'];
@@ -34,7 +33,7 @@
 			echo "deleted item! :)";
 		}
 		else{
-			echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+			echo "<font color='red'>Silly Admin! You cant delete Items with previous purchasing history!";
 		}
 	}	
 	if(isset($_POST['updateBtn'])){

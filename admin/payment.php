@@ -15,7 +15,9 @@ session_start();
 		header('location: login.php ');
 	}
 	else{
+		$_SESSION['AmountSelected'] = $_POST["numbox"]; 
 	?>
+	
 	
 	<div class="header">
         <div class="headerContent">
