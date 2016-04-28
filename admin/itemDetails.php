@@ -1,18 +1,38 @@
 <?php session_start(); ?>
 <html>
 <head>
+<link rel="stylesheet" type="text/css" href="../admin/stylesheets/styleMain.css" />
 <title>Item Details</title>
 </head>
 <body>
 	<?php 
 	require 'inludes/DbTest.php';
-		$_SESSION['Itemid'] = 2;
+		$_SESSION['Itemid'] = $_POST['idof'];
 		if(!isset($_SESSION['Itemid']))
 		{
 			header('location: mainPage.php');
 		}	
 		else
-		{
+		{ ?>
+			
+			<div class="header">
+			<div class="headerContent">
+				<a href="#">
+					<img src="../admin/images/BannerLogoasd.png" alt="PhishyLabs Logo" title="PhishyLabs Logo" />
+				</a>
+				<div class="nav">
+					<ul>
+						<li><a href="#">Home</a></li>
+						<li><a href="usersAdmin.php">Users</a></li>
+						<li><a href="orderAdmin.php">Orders</a></li>
+						<li><a href="#">Log Out</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="headerBreak"></div>
+			</div>
+			<div class="mainBody"> <?php
+				
 			$data = $conn->query("SELECT * FROM inv_items WHERE item_id = '$_SESSION[Itemid]'");
 			$item = $data->fetch_assoc();
 			?> <h3 style="underline"> <?php $item['item_name']?></h3> <?php
@@ -33,15 +53,19 @@
 				echo "Sale has ended!";
 			}
 			?>
+			<br/><br/>
+			<div class= "adding"> 
 			<form action="payment.php" method="POST">
-				<div style="float:right;">
-					Select an Amount: <input type="number" name="numbox" value="1" min="1"><br />
+				
+					Select an Amount: <input type="number" name="numbox" value="1" min="1"><br /><br />
 					<input type="submit" name="subbtn" value="Buy Now!">
 					
-				</div>
-			<?php
+			
+			
+			</form></div>
+		<?php
 		}
-	?>
-</form>
+		?>
+		</div>
 </body>
 </html>
