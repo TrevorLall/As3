@@ -11,6 +11,10 @@ session_start();
 </head>
 <body>
 <?php  require 'inludes/DbTest.php'; 
+if($_SESSION['UserId'] == null ){
+		header('location: login.php ');
+	}
+	else{
 Echo "This is addre" . $_SESSION["address_id"];
 	Echo "This is the pay" . $_SESSION["pay_id"];
 	echo "ORder ".$_SESSION["order_id"];
@@ -37,18 +41,18 @@ Echo "This is addre" . $_SESSION["address_id"];
 	<h2>Purchase Information</h2>
 
 	<?php
-		if($result=$conn->query("SELECT * From inv_items where item_id = 3")){
+		if($result=$conn->query("SELECT * From inv_items where item_id = {$_SESSION['Itemid']}")){
 			if ($result->num_rows > 0) {?>
-			<div class="CSSTableGenerator" ><table border="1" style="solid"><?php
+			<div class="CSSTableGenerator"><table border="1" style="solid"><?php
 			// output data of each row
 			echo "<th>order Number</th><th>Item Name</th><th>description</th><th>Price</th><th>Quantity</th><th>Order</th>" ;
 			$i=0;
-				while($row = $result->fetch_assoc()) {?><form action="processOrderD" method="POST"><?php
+				while($row = $result->fetch_assoc()) {?><form action="processOrderD.php" method="POST"> <?php $_SESSION['itemPrice'] = $row["item_price"];
 					echo "<tr><td><input type='text' name='theUser' value='" . $_SESSION['order_id'] .  "'></td>";
 					echo "<td><input type='text' name='thePass' value='" . $row["item_name"] .  "'</td>
 					<td>" . $row["item_desc"].  "</td>"
 					."<td>" . $row["item_price"].  "</td>"
-					."<td>" . $row["item_qoh"].  "</td>"
+					."<td>" . $_SESSION['AmountSelected'].  "</td>"
 					."<td><input type='submit' name='confirmBtn' value ='Order'>";?></form><?php
 					$i++;
 				}
@@ -113,5 +117,8 @@ Echo "This is addre" . $_SESSION["address_id"];
 		}	
 	?>
 	</div>
+	<?php
+	}
+	?>
 </body>
 </html>

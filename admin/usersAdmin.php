@@ -1,6 +1,3 @@
-<?php
-	session_start();
-?>
 <html>
 <head>
 	<link rel="stylesheet" type="text/css" href="../admin/stylesheets/style.css" />
@@ -9,13 +6,6 @@
 		alert("Cannot delete admin!");
 	}
 	</script>
-	<script language="javascript"> 
-
-   function DoPost(){
-      $.post("mainPage.php", { name: logBtn } );  //Your values here..
-   }
-
-</script>
 </head>
 <body>
 
@@ -28,12 +18,15 @@
 	if(isset($_POST['addAdmin'])){
 		$user = $_POST['adminUser'];
 		$pass = $_POST['adminPass'];
+		
 		if($insert = $conn->query("INSERT INTO `login_users`(`user_id`, `username`, `password`, `role_id`) VALUES ('null','{$user}','{$pass}', 2)")){
 			echo "added User! :)";
 		}
 		else{
 			echo "Error: " . $sql . "<br>" . mysqli_error($conn);		
 		}
+		//$Lastid = $conn->insert_id;
+	
 
 	}
 	if(isset($_POST['deleteBtn'])){
@@ -53,6 +46,7 @@
 	if(isset($_POST['updateBtn'])){
 		$upuser = $_POST['theUser'];
 		$uppass = $_POST['thePass'];
+	
 		$upIndex=$_POST['actionIndex'];
 		if($update= $conn->query("UPDATE `login_users` SET `username`='{$upuser}',`password`='{$uppass}' WHERE user_id = {$upIndex}")){
 			echo "updated User! :)";
@@ -60,6 +54,7 @@
 		else{
 			echo "Error: " . $sql . "<br>" . mysqli_error($conn);
 		}
+
 	}	
 	?>
 		<div class="header">
@@ -72,7 +67,7 @@
                     <li><a href="homeAdmin.php">Home</a></li>
                     <li><a href="orderAdmin.php">Orders</a></li>
                     <li><a href="itemsAdmin.php">Products</a></li>
-                    <li><a href="mainPage.php" OnClick="DoPost()">Log Out</a></li>
+                    <li><a href="#">Log Out</a></li>
                 </ul>
             </div>
         </div>
@@ -123,6 +118,7 @@
 	<?php
 	}
 	?>
+	
 	
 	
 </body>

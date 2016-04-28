@@ -1,57 +1,74 @@
-<?php session_start();
-require 'inludes/DbTest.php';
-if(isset($_SESSION['UserId']))
-{
-$person = $conn->query("SELECT username FROM login_users WHERE user_id = '$_SESSION[UserId]'");
-$user = $person->fetch_assoc();
-}
-else
-{
-	$user = array( "username" => "Visitor");
-}?>
-<html>
-<head>
-<title>Limited Time Only</title>
-</head>
-<body>
-<form method = "POST">
-<?php if(isset($_SESSION['UserId']))
-	{ ?>
-	<h2 text-align="center">Limited Time Only.com</h2> <input type="submit" name="Logbtn" value="Logout">
-<?php }
-	  else
-	  {
-		  ?> <input type="submit" name="Loginbtn" value="Login"> <?php
-	  }?>
-	<h3 text-align="right"><?php echo "Hello, " . $user["username"] . ".";?></h3>
+<?php 
+	session_start();
+	require 'inludes/DbTest.php';
+	if(isset($_SESSION['UserId'])){
+		$person = $conn->query("SELECT username FROM login_users WHERE user_id = '$_SESSION[UserId]'");
+		$user = $person->fetch_assoc();
+	}
+	else{
+		$user = array( "username" => "Visitor");
+	}?>
+	<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="../admin/stylesheets/styleMain.css" />
+		<title>Limited Time Only</title>
+	</head>
+	<body>
+		<div class="header">
+			<div class="headerContent">
+				<a href="#">
+					<img src="../admin/images/BannerLogoasd.png" alt="PhishyLabs Logo" title="PhishyLabs Logo" />
+				</a>
+				<div class="nav">
+					<ul>
+						<li><a href="#">Home</a></li>
+						<li><a href="usersAdmin.php">Users</a></li>
+						<li><a href="orderAdmin.php">Orders</a></li>
+						<li><a href="#">Log Out</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="headerBreak"></div>
+		</div>
+	<div class="mainBody">
+	<form method = "POST">
+	<?php if(isset($_SESSION['UserId']))
+		{ ?>
+		<h2 text-align="center">Limited Time Only.com</h2> <input type="submit" name="Logbtn" value="Logout">
+	<?php }
+		  else
+		  {
+			  ?> <input type="submit" name="Loginbtn" value="Login"> <?php
+		  }?>
+		<h3 text-align="right"><?php echo "Hello, " . $user["username"] . ".";?></h3>
+		<?php
+			if(isset($_POST['Logbtn']))
+		{
+			session_destroy();
+			header('location: mainPage.php');
+		}
+		if(isset($_POST['Loginbtn']))
+		{
+			header('location: login.php');
+		}
+		?>
+	</form>
+	<form action="mainPage.php" method="POST">
+		<p> Select a Sorting Method </p>
+		<select name="SortA">
+			<option value=""> Select... </option>
+			<option value="ASort"> Sort Alphabetically </option>
+			<option value="LPSort"> Sort by lowest price </option>
+			<option value="HPSort"> Sort by highest price </option>
+			<option value="CSort"> Sort by category </option>
+			<option value="NSort"> Sort by newest </option>
+			<option value="ESort"> Sort by ending </option>
+			<option value="MQSort"> Sort by Minimal Quantity </option>
+		</select>
+		<input type="submit" name="SortSubmit" value="Sort" >
+	</form>
+	<form method="POST">
 	<?php
-		if(isset($_POST['Logbtn']))
-	{
-		session_destroy();
-		header('location: mainPage.php');
-	}
-	if(isset($_POST['Loginbtn']))
-	{
-		header('location: login.php');
-	}
-	?>
-</form>
-<form action="mainPage.php" method="POST">
-	<p> Select a Sorting Method </p>
-	<select name="SortA">
-		<option value=""> Select... </option>
-		<option value="ASort"> Sort Alphabetically </option>
-		<option value="LPSort"> Sort by lowest price </option>
-		<option value="HPSort"> Sort by highest price </option>
-		<option value="CSort"> Sort by category </option>
-		<option value="NSort"> Sort by newest </option>
-		<option value="ESort"> Sort by ending </option>
-		<option value="MQSort"> Sort by Minimal Quantity </option>
-	</select>
-	<input type="submit" name="SortSubmit" value="Sort" >
-</form>
-<form method="POST">
-<?php
 	if(isset($_POST['SortSubmit']))
 	{
 		$SortChosen = $_POST['SortA'];
@@ -117,6 +134,7 @@ else
 		echo "No Sales on offer at this moment, please come back later!";
 	}
 ?>
+</div>
 </form>
 </body>
 </html>

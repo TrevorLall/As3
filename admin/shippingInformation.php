@@ -10,7 +10,10 @@ session_start();
 <body>
 	<?php
 	require 'inludes/DbTest.php';
-	
+	if($_SESSION['UserId'] == null ){
+		header('location: login.php ');
+	}
+	else{
 	Echo "This is addre" . $_SESSION["address_id"];
 	Echo "This is the pay" . $_SESSION["pay_id"];
 	?>
@@ -62,5 +65,8 @@ session_start();
 	    
     </form>
 	</div>
+	<?php
+	}
+	?>
 </body>
 </html>

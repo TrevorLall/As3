@@ -19,7 +19,7 @@ require 'inludes/DbTest.php';
 		
 		
 		
-		if($insertaddr = $conn->query("INSERT INTO `address`(`address_id`, `first_name`, `last_name`, `city`, `province`, `street`, `postal_code`, `country`, `user_id`) VALUES ('null','{$fname}','{$lname}','{$city}','{$province}','{$street}','{$postal}','{$country}',17)")){
+		if($insertaddr = $conn->query("INSERT INTO `address`(`address_id`, `first_name`, `last_name`, `city`, `province`, `street`, `postal_code`, `country`, `user_id`) VALUES ('null','{$fname}','{$lname}','{$city}','{$province}','{$street}','{$postal}','{$country}',{$_SESSION['UserId']})")){
 			Echo "added to address";
 		}
 		else{
@@ -28,8 +28,8 @@ require 'inludes/DbTest.php';
 		
 		$Lastid = $conn->insert_id;
 		$_SESSION["sh_address_id"] = $Lastid;
-		
-		if($insertOrder = $conn->query("INSERT INTO `orders`(`order_id`, `order_date`, `user_id`, `address_id`, `payment_id`) VALUES ('null','null',17,{$Lastid},{$_SESSION['address_id']})")){
+		$date=date('d.m.y');
+		if($insertOrder = $conn->query("INSERT INTO `orders`(`order_id`, `order_date`, `user_id`, `address_id`, `payment_id`) VALUES ('null','NOW()',{$_SESSION['UserId']},{$_SESSION["sh_address_id"]},{$_SESSION["pay_id"]})")){
 			Echo "added to order";
 		}
 		else{

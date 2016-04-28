@@ -1,3 +1,6 @@
+<?php 
+session_start(); 
+?>
 <html>
 <head>
 <title>Payment page</title>
@@ -6,11 +9,18 @@
 <body>
 	<?php
 	require 'inludes/DbTest.php';
+	
+	if(!isset($_SESSION['UserId'])){
+		$_SESSION['AmountSelected'] = $_POST["numbox"]; 
+		header('location: login.php ');
+	}
+	else{
 	?>
+	
 	<div class="header">
         <div class="headerContent">
             <a href="#">
-                <img src="../admin/images/BannerLogoasd.png" alt="PhishyLabs Logo" title="PhishyLabs Logo" />
+                <img src="../admin/images/BannerLogoasd.png" alt="Banner Logo" title="LTO Logo" />
             </a>
             <div class="nav">
                 <ul>
@@ -74,5 +84,8 @@
 		<input type="submit" name="payBtn" value="Continue">
     </form>
 	</div>
+	<?php
+	 }
+	?>
 </body>
 </html>

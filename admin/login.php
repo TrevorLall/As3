@@ -1,8 +1,26 @@
 <html>
 <head>
+<link rel="stylesheet" type="text/css" href="../admin/stylesheets/styleMain.css" />
 <title> Login page </title>
 </head>
 <body>
+<div class="header">
+			<div class="headerContent">
+				<a href="#">
+					<img src="../admin/images/BannerLogoasd.png" alt="PhishyLabs Logo" title="PhishyLabs Logo" />
+				</a>
+				<div class="nav">
+					<ul>
+						<li><a href="#">Home</a></li>
+						<li><a href="usersAdmin.php">Users</a></li>
+						<li><a href="orderAdmin.php">Orders</a></li>
+						<li><a href="#">Log Out</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="headerBreak"></div>
+		</div>
+		<div class="mainBody">
 <form method="POST">
 	<input type="text" name="userval">
 	<input type="password" name="passval">
@@ -39,6 +57,11 @@ require 'inludes/DbTest.php';
 						$_SESSION['roleId'] = $row['role_id'];
 						header('location: homeAdmin.php');
 					}
+					else if ((isset($_SESSION['Itemid'])) && (isset($_SESSION['AmountSelected'])))
+					{
+						$_SESSION['UserId'] = $row['user_id'];
+						header('location: payment.php');
+					}
 					else
 					{
 						$_SESSION['UserId'] = $row['user_id'];
@@ -48,7 +71,7 @@ require 'inludes/DbTest.php';
 				}
 				else
 				{
-					echo "Login Invalid.";
+				echo "Login Invalid.";
 				}
 			
 			}
@@ -60,5 +83,6 @@ require 'inludes/DbTest.php';
 		<input type="button" value="Register" />
 	</a>
 </form>
+</div>
 </body>
 </html>

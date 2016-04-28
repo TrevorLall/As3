@@ -4,14 +4,18 @@
 <title>Item Details</title>
 </head>
 <body>
-<form method="POST">
 	<?php 
-	require 'DbTest.php';
-		if(isset($_SESSION['Itemid']))
+	require 'inludes/DbTest.php';
+		$_SESSION['Itemid'] = 2;
+		if(!isset($_SESSION['Itemid']))
+		{
+			header('location: mainPage.php');
+		}	
+		else
 		{
 			$data = $conn->query("SELECT * FROM inv_items WHERE item_id = '$_SESSION[Itemid]'");
 			$item = $data->fetch_assoc();
-			?><h3 style="underline"><?php $item['item_name']?></h3><?php
+			?> <h3 style="underline"> <?php $item['item_name']?></h3> <?php
 			echo '<img src="data:image/jpeg;base64,'.base64_encode($item['item_image']).'" height="150" width="100" /><br />';
 			echo "Item Price: " . $item["item_price"] . "<br />";
 			echo "Quantity remaining: " . $item["item_qoh"] . "<br />";
@@ -29,22 +33,13 @@
 				echo "Sale has ended!";
 			}
 			?>
+			<form action="payment.php" method="POST">
 				<div style="float:right;">
-					<p>Select an Amount: <input type="number" name="numbox" value="1" min="1"></p><br />
+					Select an Amount: <input type="number" name="numbox" value="1" min="1"><br />
 					<input type="submit" name="subbtn" value="Buy Now!">
-					<?php
-					if(isset($_POST["subbtn"]))
-					{
-						$_SESSION['AmountSelected'] = $_POST["numbox"]; 
-						header("location: DbTest.php");
-					}
-					?>
+					
 				</div>
 			<?php
-		}
-		else
-		{
-			header("location: mainPage.php");
 		}
 	?>
 </form>

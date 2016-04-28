@@ -113,7 +113,7 @@ body{
 }.CSSTableGenerator table{
     border-collapse: collapse;
         border-spacing: 0;
-	width:80%;
+	width:auto;
 	height:auto;
 	margin:0px;padding:2px;
 }.CSSTableGenerator tr:last-child td:last-child {
