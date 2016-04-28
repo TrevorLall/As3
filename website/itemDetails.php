@@ -35,13 +35,19 @@
 					<?php
 					if(isset($_POST["subbtn"]))
 					{
-
-						$_SESSION['AmountSelected'] = $_POST["numbox"]; 
-						if(isset($_SESSION['UserId']))
+						if( $_POST["numbox"] > $item["item_qoh"])
+						{
+							echo "<p style='color:red;'> Please select a Lower Amount. </p>";
+						}
+						else
+						{
+							$_SESSION['AmountSelected'] = $_POST["numbox"]; 
+						}
+						if(isset($_SESSION['UserId']) && isset($_SESSION['AmountSelected']))
 						{
 							header('location: payment.php');
 						}
-						else
+						else if (isset($_SESSION['AmountSelected']) && (empty($_SESSION['UserId'])))
 						{
 							header('location: login.php');
 						}
