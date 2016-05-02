@@ -1,13 +1,11 @@
 <html>
 <head>
+<link rel="stylesheet" type="text/css" href="../admin/stylesheets/styleMain.css" />
 <title> Registration Page </title>
-<h1 style="underline"> Registration </h1>
+
 </head>
 <body>
-<?php if(isset($_SESSION['UserId']))
-	{ ?>
-
-	<div class="header">
+<div class="header">
 			<div class="headerContent">
 				<a href="#">
 					<img src="../admin/images/BannerLogoasd.png" alt="PhishyLabs Logo" title="PhishyLabs Logo" />
@@ -17,16 +15,14 @@
 						<li><a href="mainPage.php">Home</a></li>
 						<li><a href="aboutUs.php">About Us</a></li>
 						<li><a href="http://www.facebook.com">Contact Us</a></li>
-						<li><a><form action='logout.php' id='logBtn' method='POST'><input type='submit' name='logout' value='Logout'></form></a></li>
 					</ul>
 				</div>
 			</div>
 			<div class="headerBreak"></div>
-		</div>
-		<div class="mainBody">
-	
-<?php } ?>
-<form method="POST">
+		</div><div class="mainBody">
+<?php if(isset($_SESSION['UserId']))
+	{ header("location: mainPage.php"); } ?>
+<form action="login.php" method="POST">
 	<div>
 		<input name="UserN" type="text" required="required" id="uNamefield" placeholder="Username">
 	</div>
@@ -39,7 +35,7 @@
 </form></div>
 <form method="POST">
 <?php
-require 'DbTest.php';
+require 'inludes/DbTest.php';
 //if(isset($_POST['regbtn']))
 function newuser($conn)
 {

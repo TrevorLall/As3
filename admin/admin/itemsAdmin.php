@@ -16,15 +16,20 @@
 		$qoh = $_POST['ItemQoh'];
 		$start = $_POST['ItemStart'];
 		$end  = $_POST['ItemEnd'];
-		echo $start;
-		if($insert = $conn->query("INSERT INTO `inv_items`(`item_id`, `item_name`, `item_price`, `item_desc`, `item_qoh`, `item_image`, `sale_start`, `sale_end`, `cat_id`) VALUES ('null','{$name}',{$price},'{$desc}',{$qoh},'null','{$start}','{$end}',1)")){
+		$cat = $_POST['cat'];
+		$imageData = addslashes(file_get_contents($_FILES['image']['tmp_name']));
+		//$name = addslashes($_FILES['image']['name']);
+		//$image = file_get_contents($image);
+		//$image = base64_encode($image);
+
+		if($insert = $conn->query("INSERT INTO `inv_items`(`item_id`, `item_name`, `item_price`, `item_desc`, `item_qoh`, `item_image`, `sale_start`, `sale_end`, `cat_id`) VALUES ('null','{$name}',{$price},'{$desc}',{$qoh},'{$imageData}','{$start}','{$end}',{$cat})")){
 			echo "added Item! :)";
 		}
 		else{
-			echo "Error: " . $sql . "<br>" . mysqli_error($conn);		
+			echo "Error: " . $sql . "<br>" . mysqli_error($conn);
 		}
 		//$Lastid = $conn->insert_id;
-		
+
 
 	}
 	if(isset($_POST['deleteBtn'])){
@@ -35,7 +40,7 @@
 		else{
 			echo "<font color='red'>Silly Admin! You cant delete Items with previous purchasing history!";
 		}
-	}	
+	}
 	if(isset($_POST['updateBtn'])){
 		$upname = $_POST['thename'];
 		$upprice = $_POST['thePrice'];
@@ -95,24 +100,26 @@
 			?></table></div>
 			<?php
 			$result-> free();
-				
+
 		} else {
 			echo "0 results";
 		}
 		mysqli_close($conn);
-	}	
+	}
 ?>
 <br /><br />
 <div class="adding">
 	<h2>Add Item</h2>
-	<form action="" method="post">
+	<form action="" method="post" enctype="multipart/form-data">
 		<input type="text" placeholder="Item Name" name="ItemName">
 		<input type="text" placeholder="Item Price" name="ItemPrice"><br/><br/>
-		
+
 		<input type="text" placeholder="Item Desc" name="ItemDesc">
 		<input type="text" placeholder="item QOh" name="ItemQoh"><br/><br/>
-		<input type="date" placeholder="Sale Start" name="ItemStart"><br/>
-		<input type="date" placeholder="Sale End" name="ItemEnd"><br/>
+		<input type="date" placeholder="Sale Start" name="ItemStart">
+		<input type="date" placeholder="Sale End" name="ItemEnd"><br/><br/>
+		<input type="text" placeholder="Category" name="cat"><br/><br/>
+		<input type="file" name="image"><br/><br/>
 		<input type="submit" name="addItem"value="Add Item">
 	</form>
 </div>

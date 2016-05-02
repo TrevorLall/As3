@@ -37,12 +37,12 @@ else
 			<div class="headerBreak"></div>
 		</div>
 		<div class="mainBody">
-	
+
 <?php }
 	  else
 	  {
-		  ?> 
-		  
+		  ?>
+
 		  <div class="header">
 			<div class="headerContent">
 				<a href="#">
@@ -64,7 +64,7 @@ else
 
 		  <?php
 	  }?>
-	<h3 text-align="right"><?php echo "Hello, " . $user["username"] . ".";?></h3>
+	<h1 text-align="right"><?php echo "Hello, " . $user["username"] . ".";?></h1>
 	<?php
 		if(isset($_POST['Logbtn']))
 	{
@@ -123,7 +123,7 @@ else
 	}
 	else
 	{
-		$sql = "SELECT * FROM inv_items WHERE sale_end >= CURDATE() ORDER BY item_id"; 
+		$sql = "SELECT * FROM inv_items WHERE sale_end >= CURDATE() ORDER BY item_id";
 	}
 
 	$Sdata = $conn->query($sql);
@@ -134,7 +134,7 @@ else
 		while($row = $Sdata->fetch_assoc())
 		{
 			?>
-			<form action='itemDetails.php' method="POST"> 
+			<form action='itemDetails.php' method="POST">
 			<?php
 				//echo '<tr><td align="center"><a href="itemDetails.php" onclick="ItemFunction($row["item_id"]);"><img src="data:image/jpeg;base64,'.base64_encode($row['item_image']).'" height="150" width="100" /></a></td></tr>';
 				echo "<input type='hidden' name='idof' value='" . $row["item_id"] . "'>";
@@ -145,12 +145,12 @@ else
 				$remaining = $endDate - time();
 				$days_remain = floor($remaining / 86400);
 				$hours_remain = floor(($remaining % 86400) / 3600);
-				echo "<tr><td align='center'>Time left on sale: $days_remain days and $hours_remain hours.<br /></td></tr>";
+				echo "<tr><td align='center'>Time left on sale: $days_remain days and $hours_remain hours.<br /><br /></td></tr>";
 				?></form><?php
 		}
 		?></table></div>
 		<?php
-		
+
 		$Sdata-> free();
 	}
 	else
