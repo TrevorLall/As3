@@ -1,0 +1,41 @@
+<?php
+	session_start();
+?>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="../admin/stylesheets/style.css" />
+<head>
+<body>
+	
+<?php
+	require 'inludes/dbTest.php';
+	if($_SESSION['roleId'] != 1 || $_SESSION['roleId'] == null ){
+		header('location: login.php ');
+	}
+	else{
+		?>
+		<div class="header">
+			<div class="headerContent">
+				<a href="#">
+					<img src="../admin/images/BannerLogoasd.png" alt="PhishyLabs Logo" title="PhishyLabs Logo" />
+				</a>
+				<div class="nav">
+					<ul>
+						<li><a href="homeAdmin.php">Home</a></li>
+						<li><a href="usersAdmin.php">Users</a></li>
+						<li><a href="itemsAdmin.php">Products</a></li>
+						<li><a><form action='logout.php' id='logBtn' method='POST'><input type='submit' name='logout' value='Logout'></li>
+					</ul>
+				</div>
+			</div>
+			<div class="headerBreak"></div>
+		</div>
+		<div class="homeBody">
+		<h1>Welcome To Admin System</h1>
+		<input OnClick="location.href='usersAdmin.php'" type="button" value="Users">
+		<input OnClick="location.href='itemsAdmin.php'" type="button" value="Items">
+		<input OnClick="location.href='orderAdmin.php'" type="button" value="Orders">
+		<?php
+	}?>
+</body>
+</html>
