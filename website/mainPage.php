@@ -11,21 +11,21 @@ else
 }?>
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="../website/stylesheets/styleMain.css" />
+<link rel="stylesheet" type="text/css" href="../admin/stylesheets/styleMain.css" />
 <title>Limited Time Only</title>
 </head>
 <body>
 <div class="header">
 			<div class="headerContent">
 				<a href="#">
-					<img src="../website/itemImages/BannerLogoasd.png" alt="PhishyLabs Logo" title="PhishyLabs Logo" />
+					<img src="../admin/images/BannerLogoasd.png" alt="PhishyLabs Logo" title="PhishyLabs Logo" />
 				</a>
 				<div class="nav">
 					<ul>
 						<li><a href="#">Home</a></li>
 						<li><a href="usersAdmin.php">Users</a></li>
 						<li><a href="orderAdmin.php">Orders</a></li>
-						<li><a href="#">Log Out</a></li>
+						<li><a><form action='logout.php' id='logBtn' method='POST'><input type='submit' name='logout' ></form></a></li>
 					</ul>
 				</div>
 			</div>
@@ -35,7 +35,10 @@ else
 <form method = "POST">
 <?php if(isset($_SESSION['UserId']))
 	{ ?>
-	<h2 text-align="center">Limited Time Only.com</h2> <input type="submit" name="Logbtn" value="Logout">
+
+	<h2 text-align="center">Limited Time Only.com</h2>
+	<input type="submit" name="Logbtn" value="Logout">
+	
 <?php }
 	  else
 	  {
@@ -54,7 +57,7 @@ else
 	}
 	?>
 </form>
-<form action="mainPage.php" method="POST">
+<form action="sampleMainPage.php" method="POST">
 	<p> Select a Sorting Method </p>
 	<select name="SortA">
 		<option value=""> Select... </option>
@@ -68,7 +71,6 @@ else
 	</select>
 	<input type="submit" name="SortSubmit" value="Sort" >
 </form>
-<form method="POST">
 <?php
 	if(isset($_POST['SortSubmit']))
 	{
@@ -82,63 +84,57 @@ else
 		if($error != "")
 		{
 			echo($error);
-			$sql = "SELECT * FROM inv_items ORDER BY item_id";
+			$sql = "SELECT * FROM inv_items WHERE sale_end >= CURDATE() ORDER BY item_id";
 		}
 		else
 		{
 			switch($SortChosen)
 			{
-				case "ASort": $sql = "SELECT * FROM inv_items ORDER BY item_name"; break;
-				case "LPSort": $sql = "SELECT * FROM inv_items ORDER BY item_price ASC"; break;
-				case "HPSort": $sql = "SELECT * FROM inv_items ORDER BY item_price DESC"; break;
-				case "CSort": $sql = "SELECT * FROM inv_items ORDER BY cat_id"; break;
-				case "NSort": $sql = "SELECT * FROM inv_items ORDER BY sale_start DESC"; break;
-				case "ESort": $sql = "SELECT * FROM inv_items ORDER BY sale_end"; break;
-				case "MQSort": $sql = "SELECT * FROM inv_items ORDER BY item_qoh"; break;
+				case "ASort": $sql = "SELECT * FROM inv_items WHERE sale_end >= CURDATE() ORDER BY item_name"; break;
+				case "LPSort": $sql = "SELECT * FROM inv_items WHERE sale_end >= CURDATE() ORDER BY item_price ASC"; break;
+				case "HPSort": $sql = "SELECT * FROM inv_items WHERE sale_end >= CURDATE() ORDER BY item_price DESC"; break;
+				case "CSort": $sql = "SELECT * FROM inv_items WHERE sale_end >= CURDATE() ORDER BY cat_id"; break;
+				case "NSort": $sql = "SELECT * FROM inv_items WHERE sale_end >= CURDATE() ORDER BY sale_start DESC"; break;
+				case "ESort": $sql = "SELECT * FROM inv_items WHERE sale_end >= CURDATE() ORDER BY sale_end"; break;
+				case "MQSort": $sql = "SELECT * FROM inv_items WHERE sale_end >= CURDATE() ORDER BY item_qoh"; break;
 				default: echo("ERROR!"); exit(); break;
 			}
 		}
 	}
 	else
 	{
-		$sql = "SELECT * FROM inv_items ORDER BY item_id"; 
+		$sql = "SELECT * FROM inv_items WHERE sale_end >= CURDATE() ORDER BY item_id";
 	}
 
 	$Sdata = $conn->query($sql);
 
 	if($Sdata)
 	{ ?>
-		<table id="ItemsTbl"><?php
-		$i = 0;
+		<div class='adding'><table id="ItemsTbl"><?php
 		while($row = $Sdata->fetch_assoc())
 		{
 			?>
-			<form method="POST">
+			<form action='itemDetails.php' method="POST"> 
 			<?php
-			$_SESSION['Itemid'] = "2";
-				echo '<tr><td align="center"><a href="itemDetails.php" name="item'.'"><img src="data:image/jpeg;base64,'.base64_encode($row['item_image']).'" height="150" width="100" /></a></td></tr>';
-				//echo "<tr><td><input type='image' src='data:image/jpeg;base64,'". base64_encode($row['item_image']) ."' border='0' alt='Submit' /></td></tr>";
+				echo "<input type='hidden' name='idof' value='" . $row["item_id"] . "'>";
+				echo '<tr><td align="center"><input type="image" src="data:image/jpeg;base64,'.base64_encode($row['item_image']).'" alt="submit" height="150" width="110px" name="imgbtn" "/>';
 				echo "<tr><td align='center'>" . $row["item_name"] . " | Price: " . $row["item_price"] . "$ | Quantity left: " . $row["item_qoh"] . "</td><tr>";
 				echo "<tr><td align='center'>" . $row["item_desc"] . "</td><tr>";
-				//if($_POST['item'.$i.''])
-			//	{
-			//		$_SESSION['Itemid'] = $row['item_id'];
-				//}
 				?></form><?php
-				
-				$i++;
 		}
-		?></table>
-		<?php 
+		?></table></div>
+		<?php
 		
 		$Sdata-> free();
 	}
 	else
 	{
 		echo "No Sales on offer at this moment, please come back later!";
+		$error = "Inventory retrieved null values";
+		echo "$error"; 
 	}
 ?>
 </div>
-</form>
+
 </body>
 </html>
